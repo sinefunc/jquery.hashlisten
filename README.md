@@ -1,5 +1,5 @@
-jQuery hashlisten
-=================
+jQuery hashlisten v0.1.0
+========================
 
 Monitors the URL for changes in the hash. Requires JQuery 1.3+.
 

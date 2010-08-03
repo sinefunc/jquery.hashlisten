@@ -1,4 +1,6 @@
-// JQuery Hashlisten
+// JQuery Hashlisten v0.1.0
+// http://github.com/sinefunc/jquery.hashlisten
+//
 // Listens for changes to the window hash.
 //
 // Usage:
