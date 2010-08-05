@@ -5,7 +5,8 @@ Monitors the URL for changes in the hash. Requires JQuery 1.3+.
 
 This is often used for pages that have many states. If each state
 is represented by a different hash in the URL (for instance,
-http://site.com/#edit), the back button will work correctly.
+http://site.com/#edit), clicking the back button will return the
+page to the previous state.
 
 The challenge: there is no browser event fired after clicking the
 back button. Hashlisten solves that by continuously monitoring
