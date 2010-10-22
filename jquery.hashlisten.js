@@ -1,8 +1,3 @@
-// JQuery Hashlisten v0.1.0
-// http://github.com/sinefunc/jquery.hashlisten
-//
-// Listens for changes to the window hash.
-//
 // Usage:
 //
 //   $.hashListen(function(newhash) {
@@ -14,7 +9,11 @@
 //     // Also: this.referrer, this.matches, this.hash
 //   });
 //
-;(function($) {
+;(function ($) {
+  // Thanks http://benalman.com/projects/jquery-hashchange-plugin/
+  var docMode = document.documentMode;
+  var supportsOnhashchange = 'onhashchange' in window && (docMode === undefined || docMode > 7);
+
   // Listening to hash
   $.hashListen = function(p, q) {
     if (typeof p == "string") {
@@ -43,9 +42,11 @@
     matches: null,
     hash: null,
 
-    init: function() {
+    init: function () {
       var self = this;
-      self._timer = window.setInterval(function() {
+      if (supportsOnhashchange) { return; }
+
+      self._timer = window.setInterval(function () {
         return self.ontick();
       }, self.interval);
       $(document.body).click(function() {
@@ -53,7 +54,7 @@
       });
     },
 
-    ontick: function() {
+    ontick: function () {
       var hash = window.location.hash.substr(1);
       if (hash == this.hash) { return; }
       this.referrer = this.hash;
@@ -61,9 +62,9 @@
       this.onchange([hash]);
     },
 
-    onchange: function(a) {
+    onchange: function (a) {
       if ($.hashListen._timer == null)
-        { $(function() { $.hashListen.init(); }); }
+        { $(function () { $.hashListen.init(); }); }
 
       if (typeof a == "function")
         { this._onchange.push(a); }
@@ -76,4 +77,9 @@
       }
     }
   });
+
+  if (supportsOnhashchange) {
+    $(window).bind('hashchange', function () { $.hashListen.ontick(); });
+    $(function () { $.hashListen.ontick(); });
+  }
 })(jQuery);
